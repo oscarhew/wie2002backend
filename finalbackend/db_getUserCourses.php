@@ -12,6 +12,7 @@ $category = $param['category'];
 
 
 // Fetch data from the database
+
 $sql = "SELECT 
     course.id as id,
     course.title as courseName,
@@ -21,14 +22,16 @@ $sql = "SELECT
 FROM course INNER JOIN enrollment ON enrollment.courseId = course.Id 
 INNER JOIN user ON enrollment.userId = user.Id 
 INNER JOIN sub_category ON sub_category.Id = course.categoryId 
-WHERE user.username = '" . $username . "'". "AND sub_category.name = '". $category. "'";
+WHERE user.username = '" . $username . "'";
+
+if (!is_null($category)){
+    $sql = $sql . " AND sub_category.name = '". $category. "'";
+}
+
 
 $result = $conn->query($sql);
 
 $data = array();
-$categoryDetailArr = array();
-$singleListVidoes = array();
-$allListVideos = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $progress = (int)$row['progress'];
@@ -37,9 +40,6 @@ if ($result->num_rows > 0) {
         
     }
 }
-
-
-
 
 echo json_encode($data);
 
