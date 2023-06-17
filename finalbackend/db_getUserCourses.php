@@ -16,7 +16,8 @@ $sql = "SELECT
     course.id as id,
     course.title as courseName,
     course.description as `description`,
-    course.image as img
+    course.image as img,
+    enrollment.progress as progress 
 FROM course INNER JOIN enrollment ON enrollment.courseId = course.Id 
 INNER JOIN user ON enrollment.userId = user.Id 
 INNER JOIN sub_category ON sub_category.Id = course.categoryId 
@@ -30,8 +31,8 @@ $singleListVidoes = array();
 $allListVideos = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $randomValue = rand(1, 10) * 10;
-        $row['progress'] = $randomValue;
+        $progress = (int)$row['progress'];
+        $row['progress'] = $progress;
         $data[] = $row;
         
     }
