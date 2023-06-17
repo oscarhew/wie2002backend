@@ -34,7 +34,15 @@ $full_json = array();
 foreach($subCategoryArr as $singleCategory){
     $subCategoryName;
     // need add course.image_url, it's remove for now
-    $sql = "SELECT course.id, course.title, course.description, course.image, author.name as authorName, sub_category.id, sub_category.name
+    $sql = "SELECT course.id,
+    course.title, 
+    course.description, 
+    course.image, 
+    author.name as authorName, 
+    sub_category.id, 
+    sub_category.name,
+    course.price as price,
+    course.rate as rate 
     FROM course". " INNER JOIN sub_category ON sub_category.id = course.categoryId INNER JOIN author ON author.id = course.authorId" ." WHERE sub_category.id=". $singleCategory['id'];
 
     $result = $conn->query($sql);
