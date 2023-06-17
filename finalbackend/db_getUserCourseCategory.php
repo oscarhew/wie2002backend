@@ -28,8 +28,10 @@ $singleListVidoes = array();
 $allListVideos = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $categoryId = $row['subCategoryName'];
-        $data[] = $categoryId;
+        if(!in_array($row['subCategoryName'], $data)){
+            $categoryId = $row['subCategoryName'];
+            $data[] = $categoryId;
+        }
         
     }
 }
