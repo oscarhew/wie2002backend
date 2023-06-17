@@ -10,7 +10,7 @@ $username = $param['username'];
 $password = $param['password'];
 
 $data = array();
-echo 'sadasdsad'. isset($_SESSION['username']);
+
 if (isset($_SESSION['username'])) {
     session_destroy();
     $data = array(
