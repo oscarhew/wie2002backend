@@ -52,9 +52,9 @@ if ($result->num_rows > 0) {
 }
 
 $finalJson =  array(
-    'listVideos' => $allListVideos,
     'viewed' => 4,
-    'total' => 10
+    'total' => 10,
+    'listVideos' => $allListVideos
 );
 
 echo json_encode($finalJson);

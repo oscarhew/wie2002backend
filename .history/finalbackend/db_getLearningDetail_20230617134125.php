@@ -19,8 +19,6 @@ $result = $conn->query($sql);
 
 $data = array();
 $categoryDetailArr = array();
-$singleListVidoes = array();
-$allListVideos = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $listVideos = array();
@@ -28,9 +26,8 @@ if ($result->num_rows > 0) {
         $category = $row['category'];
         $titleName = explode('_', $row['title']);
         $titleLink = explode('_', $row['link']);
-        
+        echo sizeof($titleName);
         $json_arr = array();
-
         for($i = 0; $i < sizeof($titleName); $i++){
             $json_arr = array(
                 'title' => $titleName[$i],
@@ -39,25 +36,12 @@ if ($result->num_rows > 0) {
             $listVideos[] = $json_arr;
         }
         
-        $singleListVidoes = array(
-            'category' => $row['category'],
-            'videos' => $listVideos
-        );
-
-        $allListVideos[] = $singleListVidoes;
 
         $data[] = $row;
-        break;
     }
 }
 
-$finalJson =  array(
-    'listVideos' => $allListVideos,
-    'viewed' => 4,
-    'total' => 10
-);
-
-echo json_encode($finalJson);
+echo json_encode($listVideos);
 
 
 // Return data as JSON response
