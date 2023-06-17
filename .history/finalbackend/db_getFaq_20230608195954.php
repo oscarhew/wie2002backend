@@ -12,6 +12,11 @@ $result = $conn->query($sql);
 $data = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        $active = $row['active'];
+        if($active == '1')
+            $row['active'] = true;
+        else
+            $row['active'] = false;
         $data[] = $row;
     }
 }
