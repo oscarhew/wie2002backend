@@ -5,22 +5,20 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 include 'db_connect.php'; // Include the database connection file
 
-$postData = file_get_contents('php://input');
-$param = json_decode($postData, true);
-$username = $param['username'];
-$category = $param['category'];
-
+$username = $_GET['param'];
 
 // Fetch data from the database
 $sql = "SELECT 
     course.id as id,
     course.title as courseName,
     course.description as `description`,
-    course.image as img
+    course.image as img,
+    sub_category.Id as subCategoryId,
+    sub_category.name as subCategoryName 
 FROM course INNER JOIN enrollment ON enrollment.courseId = course.Id 
 INNER JOIN user ON enrollment.userId = user.Id 
-INNER JOIN sub_category ON sub_category.Id = course.categoryId 
-WHERE user.username = '" . $username . "'". "AND sub_category.name = '". $category. "'";
+INNER JOIN sub_category ON sub_category.id = course.categoryId 
+WHERE user.username = '" . $username . "'";
 
 $result = $conn->query($sql);
 
@@ -30,9 +28,8 @@ $singleListVidoes = array();
 $allListVideos = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $randomValue = rand(1, 10) * 10;
-        $row['progress'] = $randomValue;
-        $data[] = $row;
+        $categoryId = $row['subCategoryName'];
+        $data[] = $categoryId;
         
     }
 }

@@ -21,7 +21,10 @@ session_start();
 if ($result->num_rows === 1) {
     $row = $result->fetch_assoc();
     $storedPassword = $row["password"];
-
+    $data = array(
+        'isLogin' => true
+    );
+    $_SESSION["username"] = $username;
     if ($password === $storedPassword) {
         // Username and password combination is correct
 
