@@ -20,8 +20,8 @@ if ($result->num_rows > 0) {
 $subCategoryArr = array();
 foreach($data as $row){
     $singleData = array(
-        'id' => $row['id'],
-        'subCategoryName' => $row['name']
+        'id' => $row['sub_category_id'],
+        'subCategoryName' => $row['sub_category_name']
     );
     array_push($subCategoryArr, $singleData);
 }
@@ -33,16 +33,14 @@ $json_arr = array();
 $full_json = array();
 foreach($subCategoryArr as $singleCategory){
     $subCategoryName;
-    // need add course.image_url, it's remove for now
-    $sql = "SELECT course.id, course.title, course.description, course.image, author.name as authorName, sub_category.id, sub_category.name
-    FROM course". " INNER JOIN sub_category ON sub_category.id = course.categoryId INNER JOIN author ON author.id = course.authorId" ." WHERE sub_category.id=". $singleCategory['id'];
-
+    $sql = "SELECT course.course_id, course.course_name, course.image_url, course.course_description, course.instructor_id, sub_category.sub_category_id, sub_category.sub_category_name
+    FROM course". " INNER JOIN sub_category ON sub_category.sub_category_id = course.sub_category_id " ." WHERE sub_category.sub_category_id=". $singleCategory['id'];
+    
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $row['author'] = $row['authorName'];
             $data[] = $row;
-            $subCategoryName = $row['name'];
+            $subCategoryName = $row['sub_category_name'];
         }
         
         $json_arr = array(
