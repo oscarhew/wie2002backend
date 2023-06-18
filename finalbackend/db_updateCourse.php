@@ -27,9 +27,9 @@ echo $authorId;
 
 //get category id
 //Python is normal, but the rest will have '}' at the back
-if($categoryName != 'Python'){
-    $categoryName = substr($categoryName, 0, -1);
-}
+// if($categoryName != 'Python'){
+//     $categoryName = substr($categoryName, 0, -1);
+// }
 $sqlCategory = "SELECT id FROM sub_category WHERE name = '$categoryName'";
 $resultCategory = mysqli_query($conn, $sqlCategory);
 if (!$resultCategory) {
