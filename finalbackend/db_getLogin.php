@@ -29,6 +29,7 @@ if ($result->num_rows === 1) {
         // Username and password combination is correct
 
         $data = array(
+            'userId'  => $row['id'],
             'isLogin' => true
         );
         $_SESSION["username"] = $username;
