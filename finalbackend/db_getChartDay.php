@@ -11,10 +11,8 @@ $full_json = array();
 
 // need add course.image_url, it's remove for now
 $sql = "SELECT 
-chart.day, 
-chart.month 
-
-FROM chart";
+label, y
+FROM chart_day";
 
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
