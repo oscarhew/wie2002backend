@@ -7,7 +7,8 @@ include 'db_connect.php'; // Include the database connection file
 
 $postData = file_get_contents('php://input');
 $param = json_decode($postData, true);
-$id = 3;
+//id set to 3 first, dunno how to resolve
+$id = $param['id'];
 $courseName = $param['title'];
 $authorName = $param['author'];
 $price = $param['price'];
@@ -52,15 +53,15 @@ if ($conn->query($sql) === TRUE) {
     echo json_encode('fail to update course');
 }          
 
-$sql = "UPDATE course
-        SET title =  '$courseName' ,
-            price = $price,
-            description = '$description'
-        WHERE id = $id";
-if ($conn->query($sql) === TRUE) {
-    echo json_encode('Update successfully');
-}else{
-    echo json_encode('fail to update course');
-}      
+// $sql = "UPDATE course
+//         SET title =  '$courseName' ,
+//             price = $price,
+//             description = '$description'
+//         WHERE id = $id";
+// if ($conn->query($sql) === TRUE) {
+//     echo json_encode('Update successfully');
+// }else{
+//     echo json_encode('fail to update course');
+// }      
 
 $conn->close();
