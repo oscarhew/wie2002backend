@@ -52,9 +52,31 @@ foreach($subCategoryArr as $singleCategory){
             $row['author'] = $row['authorName'];
             $data[] = $row;
             $subCategoryName = $row['name'];
+            $displayName = "";
+            switch($subCategoryName){
+                case "Python":
+                    $displayName = "python";
+                    break;
+                case "Excel":
+                    $displayName = "excel";
+                    break;
+                case "Web Developer":
+                    $displayName = "webDeveloper";
+                    break;
+                case "JavaScript":
+                    $displayName = "javaScript";
+                    break;
+                case "Data Science":
+                    $displayName = "dataScience";
+                    break;
+                case "Amazon AWS":
+                    $displayName = "aws";
+                    break;
+            }
         }
         
         $json_arr = array(
+            'displayName' => $displayName,
             'category' => $subCategoryName,
             'courses' => $data
         );
