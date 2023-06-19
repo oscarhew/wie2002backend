@@ -9,12 +9,24 @@ $courseId = $_GET['param'];
 
 // Fetch data from the database
 $sql = "SELECT 
-    course.id as id,
+    course.categoryId 
+FROM course 
+WHERE course.id = " . $courseId;
+$result = $conn->query($sql);
+$categoryId = 1;
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $categoryId = $row['categoryId'];
+    }
+}
+
+// Fetch data from the database
+$sql = "SELECT 
     lesson.title as category,
     lesson.content as title,
     lesson.video as link 
-FROM lesson INNER JOIN course ON lesson.courseId = course.id  
-WHERE course.id = " . $courseId;
+FROM lesson 
+WHERE lesson.categoryId = " . $categoryId;
 $result = $conn->query($sql);
 
 $data = array();

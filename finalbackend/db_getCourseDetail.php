@@ -18,12 +18,15 @@ $sql = "SELECT
     course.overview as overview,
     course.description as `description`,
     course.whatWillLearn as `whatWillLearn`,
-    course.courseIncludes as `courseIncludes`
-FROM course INNER JOIN author ON author.ID = course.authorID 
+    course.courseIncludes as `courseIncludes`,
+    sub_category.id as `subCategoryId` 
+FROM course INNER JOIN author ON author.id = course.authorId 
+INNER JOIN sub_category ON sub_category.id = course.categoryId 
 WHERE course.id = " . $courseId;
 $result = $conn->query($sql);
 
 $data = array();
+$categoryId = 1;
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $courseIncludes = $row['courseIncludes'];
@@ -34,17 +37,20 @@ if ($result->num_rows > 0) {
         $whatWillLearn = explode('_', $whatWillLearn);
         $row['whatWillLearn'] = $whatWillLearn;
 
+        $categoryId = $row['subCategoryId'];
+
         $data = $row;
     }
 }
-
+// echo $categoryId;
 // Get course contents
 // Fetch data from the database
 $sql = "SELECT 
     lesson.title as title,
-    lesson.content as content 
-FROM lesson INNER JOIN course ON lesson.courseId = course.id 
-WHERE course.id = " . $courseId;
+    lesson.content as content  
+FROM lesson 
+WHERE lesson.categoryId = " . $categoryId;
+
 $result = $conn->query($sql);
 
 $lessons = array();
