@@ -23,7 +23,7 @@ if (!$resultAuthor) {
 }
 $rowAuthor = mysqli_fetch_assoc($resultAuthor);
 $authorId = $rowAuthor['id'];
-echo $authorId;
+// echo $authorId;
 
 //get category id
 //Python is normal, but the rest will have '}' at the back
@@ -37,7 +37,7 @@ if (!$resultCategory) {
 }
 $rowCategory = mysqli_fetch_assoc($resultCategory);
 $categoryId = $rowCategory['id'];
-echo $categoryId;
+// echo $categoryId;
 
 $sql = "UPDATE course
         SET title =  '$courseName',
