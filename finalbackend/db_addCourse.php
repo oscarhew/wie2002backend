@@ -39,7 +39,7 @@ $resultAuthor = mysqli_query($conn, $sqlAuthor);
 //if new author then create a new entry, must be user since they can login
 if ($resultAuthor->num_rows == 0) {
     $sqlInsertAuthor = "INSERT INTO author (userId, name, image, rating, rateCount, student, courses, introduction, reviews)
-                        VALUES ($userID, '$authorName', 'https://img-b.udemycdn.com/course/240x135/1565838_e54e_16.jpg', 0.0, 0, 0, 1, 'abc', 0)";
+                        VALUES ($userID, '$authorName', 'https://img-b.udemycdn.com/user/200_H/31334738_a13c_3.jpg', 0.0, 0, 0, 1, 'Allow me to introduce This Instructor, a remarkable individual who brings a unique set of skills and qualities to the table. With their expertise in various subjects, This Instructor has consistently demonstrated an exceptional ability to deliver engaging and informative lessons to students. They possess a profound understanding of their field and have successfully guided numerous students towards academic success. What sets This Instructor apart is their unwavering dedication to fostering a supportive and inclusive learning environment, where students feel encouraged to ask questions and actively participate. With their passion for teaching and commitment to student growth, This Instructor is sure to make a positive and lasting impact on those they teach.', 0)";
     if (mysqli_query($conn, $sqlInsertAuthor)) {
         $authorId = mysqli_insert_id($conn);
         $authorID = $authorId;
