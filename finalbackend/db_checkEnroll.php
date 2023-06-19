@@ -11,14 +11,18 @@ $userId = $param['userId'];
 $courseId = $param['courseId'];
 
 // Fetch data from the database
-$sql = "INSERT INTO enrollment (userId, courseId, enrollmentDate, progress) 
-VALUES (" . $userId . ", " . $courseId . ", '". date("Y-m-d") . "', 0)";
+$sql = "SELECT * 
+FROM enrollment  
+WHERE enrollment.courseId = " . $courseId ." AND enrollment.userId = ". $userId;
+$result = $conn->query($sql);
 
-if ($conn->query($sql) === TRUE) {
-    echo json_encode("Update query executed successfully.");
-} else {
-    echo json_encode("Error updating record: " . $conn->error);
+$data = array();
+if ($result->num_rows == 0) {
+    echo json_encode('true');
+}else{
+    echo json_encode('false');
 }
+
 
 
 // Return data as JSON response
