@@ -10,7 +10,6 @@ $param = json_decode($postData, true);
 $id = $param[0]['id'];
 
 $sql = "DELETE FROM course WHERE id = $id";
-echo $sql;
 if ($conn->query($sql) === TRUE) {
     echo json_encode('Update successfully');
 }else{
