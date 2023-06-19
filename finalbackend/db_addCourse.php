@@ -55,8 +55,6 @@ if (!$resultAuthor) {
 }
 $rowAuthor = mysqli_fetch_assoc($resultAuthor);
 $authorID = $rowAuthor['id'];
-echo $authorID;
-
 
 $sqlCategory = "SELECT id FROM sub_category WHERE name = '$categoryName'";
 $resultCategory = mysqli_query($conn, $sqlCategory);
