@@ -67,12 +67,11 @@ $categoryId = $rowCategory['id'];
 $sql = "INSERT INTO course 
         (authorId, categoryId, rate, title, price, rateCount, overview, description, whatWillLearn, courseIncludes, createdDate, image)
         VALUES ($authorID, $categoryId, 0.00, '$courseName', $price, 0, '$overview', '$description', '$whatWillLearn', 
-            '$courseInclude', ".date('Y-m-d') . ", '$img')";
+            '$courseInclude', " . date('Y-m-d') . ", '$img')";
 if ($conn->query($sql) === TRUE) {
     echo json_encode('Update successfully');
-}else{
+} else {
     echo json_encode('fail to update course');
-}          
+}
 
 $conn->close();
-
