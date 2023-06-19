@@ -20,7 +20,7 @@ $url = $param['urlInput'];
 $sqlAuthor = "SELECT id FROM author WHERE name = '$authorName'";
 $resultAuthor = mysqli_query($conn, $sqlAuthor);
 if (!$resultAuthor) {
-    die('Failed to fetch author ID: ' . mysqli_error($connection));
+    die('Failed to fetch author ID: ' . mysqli_error($conn));
 }
 $rowAuthor = mysqli_fetch_assoc($resultAuthor);
 $authorId = $rowAuthor['id'];

@@ -7,37 +7,57 @@ include 'db_connect.php'; // Include the database connection file
 
 $postData = file_get_contents('php://input');
 $param = json_decode($postData, true);
+$userID = $param['id'];
 $courseName = $param['title'];
 $authorName = $param['author'];
 $price = $param['price'];
 $description = $param['description'];
 $categoryName = $param['category'];
 $url = $param['urlInput'];
+$overview = 'Join the Complete Web Development Bootcamp: the highest-rated, comprehensive course to become a full-stack web developer. Learn the latest tools and technologies used by top companies like Apple, Google, and Netflix. With animated explanations, real-world projects, and 65+ hours of video tutorials, even beginners can become masters. Save $12,000 compared to in-person bootcamps. Start coding and change your life today!';
+$whatWillLearn = 'Build 16 web development projects for your portfolio, ready to apply for junior developer jobs._Learn the latest technologies, including Javascript, React, Node and even Web3 development._After the course you will be able to build ANY website you want._Build fully-fledged websites and web apps for your startup or business._Work as a freelance web developer.';
+$courseInclude = '23 hours on-demand video_6 coding exercises_Full lifetime access_Certificate of completion';
+$img = 'https://img-b.udemycdn.com/course/240x135/1565838_e54e_16.jpg';
+
+//get course id
+//$sql = "select id from course order by id DESC limit 1;";
+//$sqlCourseID = mysqli_query($conn, $sql);
+$authorID = 0;
+
+$sqlCourseId = "SELECT * FROM course order by id DESC limit 1";
+$resultCourse = mysqli_query($conn, $sqlCourseId);
+if (!$resultCourse) {
+    die('Failed to fetch course ID: ' . mysqli_error($conn));
+}
+$rowCourse = mysqli_fetch_assoc($resultCourse);
+$sqlCourseID = $rowCourse['id'];
+$sqlCourseID += 1;
 
 //get author id
 $sqlAuthor = "SELECT id FROM author WHERE name = '$authorName'";
 $resultAuthor = mysqli_query($conn, $sqlAuthor);
 //if new author then create a new entry, must be user since they can login
-if (!$resultAuthor) {
-    //get user id first
-    $sqlUserId = "SELECT id FROM user WHERE username = '$authorName'";
+if ($resultAuthor->num_rows == 0) {
     $sqlInsertAuthor = "INSERT INTO author (userId, name, image, rating, rateCount, student, courses, introduction, reviews)
-                        VALUES ($sqlUserId, $authorName, 'https://img-b.udemycdn.com/course/240x135/1565838_e54e_16.jpg', 0.0, 0, 0, 1, 'abc', 0)";
+                        VALUES ($userID, '$authorName', 'https://img-b.udemycdn.com/course/240x135/1565838_e54e_16.jpg', 0.0, 0, 0, 1, 'abc', 0)";
     if (mysqli_query($conn, $sqlInsertAuthor)) {
         $authorId = mysqli_insert_id($conn);
+        $authorID = $authorId;
     } else {
         die('Error creating new author: ' . mysqli_error($conn));
     }
 }
-$rowAuthor = mysqli_fetch_assoc($resultAuthor);
-$authorId = $rowAuthor['id'];
-echo $authorId;
 
-//get category id
-//Python is normal, but the rest will have '}' at the back
-// if($categoryName != 'Python'){
-//     $categoryName = substr($categoryName, 0, -1);
-// }
+$sqlAuthor = "SELECT id FROM author WHERE name = '$authorName'";
+$resultAuthor = mysqli_query($conn, $sqlAuthor);
+if (!$resultAuthor) {
+    die('Failed to fetch author ID: ' . mysqli_error($conn));
+}
+$rowAuthor = mysqli_fetch_assoc($resultAuthor);
+$authorID = $rowAuthor['id'];
+echo $authorID;
+
+
 $sqlCategory = "SELECT id FROM sub_category WHERE name = '$categoryName'";
 $resultCategory = mysqli_query($conn, $sqlCategory);
 if (!$resultCategory) {
@@ -45,30 +65,15 @@ if (!$resultCategory) {
 }
 $rowCategory = mysqli_fetch_assoc($resultCategory);
 $categoryId = $rowCategory['id'];
-echo $categoryId;
 
-$sql = "UPDATE course
-        SET title =  '$courseName',
-            price = $price,
-            authorId = $authorId,
-            categoryId = $categoryId,
-            description = '$description'
-        WHERE id = $id";
+$sql = "INSERT INTO course 
+        (authorId, categoryId, rate, title, price, rateCount, overview, description, whatWillLearn, courseIncludes, createdDate, image)
+        VALUES ($authorID, $categoryId, 0.00, '$courseName', $price, 0, '$overview', '$description', '$whatWillLearn', 
+            '$courseInclude', ".date('Y-m-d') . ", '$img')";
 if ($conn->query($sql) === TRUE) {
     echo json_encode('Update successfully');
 }else{
     echo json_encode('fail to update course');
 }          
-
-$sql = "UPDATE course
-        SET title =  '$courseName' ,
-            price = $price,
-            description = '$description'
-        WHERE id = $id";
-if ($conn->query($sql) === TRUE) {
-    echo json_encode('Update successfully');
-}else{
-    echo json_encode('fail to update course');
-}      
 
 $conn->close();
