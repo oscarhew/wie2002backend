@@ -34,12 +34,12 @@ $full_json = array();
 foreach($subCategoryArr as $singleCategory){
     $subCategoryName;
     // need add course.image_url, it's remove for now
-    $sql = "SELECT course.id,
+    $sql = "SELECT course.id as id,
     course.title, 
     course.description, 
     course.image, 
     author.name as authorName, 
-    sub_category.id, 
+    sub_category.id as subId, 
     sub_category.name,
     course.price as price,
     course.rate as rate,
