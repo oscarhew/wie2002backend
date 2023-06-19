@@ -19,22 +19,29 @@ if (!is_null($username)) {
     if (($result->num_rows > 0)) {
         echo "Username has been taken. Please use another username";
     } else {
-        // Fetch data from the database
-        $sql = "INSERT INTO user (username, email, registrationDate, password)
-    VALUES ('" . $username . "', '" . $email . "', '" . date("Y-m-d") . "','" . $password . "')";
-
-        if ($conn->query($sql) === TRUE) {
-            $sql = "SELECT * FROM user where username='" . $username . "'";
-            $result = $conn->query($sql);
-            $row = $result->fetch_assoc();
-            $id = $row['id'];
-            $data = array(
-                'userId' =>  $id
-            );
-            $data = json_encode($data);
-            echo $data;
+        $sql = "SELECT * FROM user where email='" . $email . "'";
+        $result = $conn->query($sql);
+        $data = array();
+        if (($result->num_rows > 0)) {
+            echo "Email has been taken. Please use another email";
         } else {
-            echo "Error updating record: ";
+            // Fetch data from the database
+            $sql = "INSERT INTO user (username, email, registrationDate, password)
+        VALUES ('" . $username . "', '" . $email . "', '" . date("Y-m-d") . "','" . $password . "')";
+
+            if ($conn->query($sql) === TRUE) {
+                $sql = "SELECT * FROM user where username='" . $username . "'";
+                $result = $conn->query($sql);
+                $row = $result->fetch_assoc();
+                $id = $row['id'];
+                $data = array(
+                    'userId' =>  $id
+                );
+                $data = json_encode($data);
+                echo $data;
+            } else {
+                echo "Error updating record: ";
+            }
         }
     }
 

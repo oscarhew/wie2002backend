@@ -42,7 +42,8 @@ foreach($subCategoryArr as $singleCategory){
     sub_category.id, 
     sub_category.name,
     course.price as price,
-    course.rate as rate 
+    course.rate as rate,
+    course.rateCount as rateCount 
     FROM course". " INNER JOIN sub_category ON sub_category.id = course.categoryId INNER JOIN author ON author.id = course.authorId" ." WHERE sub_category.id=". $singleCategory['id'];
 
     $result = $conn->query($sql);
