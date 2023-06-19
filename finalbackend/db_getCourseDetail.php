@@ -80,6 +80,7 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $instructiorDetail[] = $row;
         $data['instructor'] = $instructiorDetail[0];
+        $data['author'] = $row['name'];
     }
 }
 
