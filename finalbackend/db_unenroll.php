@@ -15,8 +15,7 @@ $sql = "DELETE FROM enrollment WHERE enrollment.userId = " . $userId. " AND enro
 
 $result = $conn->query($sql);
 
-$data = array();
-if ($result->num_rows == 0) {
+if ($conn->query($sql) === TRUE) {
     echo json_encode('true');
 }else{
     echo json_encode('false');
