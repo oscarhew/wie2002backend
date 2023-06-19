@@ -7,7 +7,6 @@ include 'db_connect.php'; // Include the database connection file
 
 $postData = file_get_contents('php://input');
 $param = json_decode($postData, true);
-//id set to 3 first, dunno how to resolve
 $id = $param['id'];
 $courseName = $param['title'];
 $authorName = $param['author'];
