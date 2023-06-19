@@ -8,7 +8,10 @@ include 'db_connect.php'; // Include the database connection file
 $postData = file_get_contents('php://input');
 $param = json_decode($postData, true);
 $username = $param['username'];
-$category = $param['category'];
+if(!is_null($param['category'])){
+    $category = $param['category'];
+}
+
 
 
 // Fetch data from the database
@@ -24,7 +27,7 @@ INNER JOIN user ON enrollment.userId = user.Id
 INNER JOIN sub_category ON sub_category.Id = course.categoryId 
 WHERE user.username = '" . $username . "'";
 
-if (!is_null($category)){
+if (!is_null( $param['category'])){
     $sql = $sql . " AND sub_category.name = '". $category. "'";
 }
 
@@ -39,6 +42,8 @@ if ($result->num_rows > 0) {
         $data[] = $row;
         
     }
+}else{
+    $data = array();
 }
 
 echo json_encode($data);

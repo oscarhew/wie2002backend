@@ -64,13 +64,13 @@ $data['courseContent'] = $courseContents;
 // Get instructor details
 // Fetch data from the database
 $sql = "SELECT 
-    author.name as authorName,
-    author.image as authorImage,
-    author.rating as authorRating,
-    author.reviews as authorReview,
-    author.student as authorStudents,
-    author.courses as authorCourses,
-    author.introduction as authorIntroduction
+    author.name as `name`,
+    author.image as `image`,
+    author.rating as `rating`,
+    author.reviews as `reviews`,
+    author.student as `student`,
+    author.courses as `course`,
+    author.introduction as `introduction`
 FROM author INNER JOIN course ON author.ID = course.authorID 
 WHERE course.id = " . $courseId;
 $result = $conn->query($sql);
@@ -79,7 +79,7 @@ $instructiorDetail = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $instructiorDetail[] = $row;
-        $data['instructor'] = $instructiorDetail;
+        $data['instructor'] = $instructiorDetail[0];
     }
 }
 
