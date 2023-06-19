@@ -11,10 +11,23 @@ $courseId = $param['courseId'];
 $userId = $param['userId'];
 $index = $param['index'];
 
+// Fetch data from the database
+$sql = "SELECT 
+    course.categoryId 
+FROM course 
+WHERE course.id = " . $courseId;
+$result = $conn->query($sql);
+$categoryId = 1;
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $categoryId = $row['categoryId'];
+    }
+}
+
 $sql = "SELECT 
     COUNT(id) as totalProgressCount 
     FROM lesson 
-    WHERE courseId = '" . $courseId . "'";
+    WHERE categoryId = '" . $categoryId . "'";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 $totalProgressCount = $row['totalProgressCount'];
