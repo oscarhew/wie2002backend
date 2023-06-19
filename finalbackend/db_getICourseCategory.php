@@ -60,7 +60,10 @@ foreach($subCategoryArr as $singleCategory){
         );
     }
     $data = array();
-    array_push($full_json, $json_arr);
+    if($result -> num_rows != 0){
+        array_push($full_json, $json_arr);
+    }
+    
     $json_arr = array();
 }
 
